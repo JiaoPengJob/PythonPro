@@ -1,0 +1,57 @@
+#!usr/bin/python3
+"""
+简单的网页小说爬虫
+"""
+import time
+
+import requests
+from bs4 import BeautifulSoup
+
+# r = requests.get('https://github.com/timeline.json')
+# print(r.content)
+#
+# url = "http://192.168.1.111:8090/shareplay-api/index/exchangeList.jhtml"
+# params = {"swap_type": "1"}
+#
+# response = requests.post(url=url, params=params)
+# print(response.url)
+# print(response.json())
+
+# url = "http://www.biqukan.com/3_3039/1351333.html"
+# res = requests.get(url=url)
+# html = res.text
+# bf = BeautifulSoup(html, "html.parser")
+# texts = bf.findAll("div", class_="showtxt")
+# print(texts[0].text.replace('\xa0' * 8, ' '))
+
+res = requests.get(url="http://www.biqukan.com/3_3039/", timeout=30)
+bf = BeautifulSoup(res.text, "html.parser")
+texts = bf.findAll("div", class_="listmain")
+# print(texts)
+abf = BeautifulSoup(str(texts[0]), "html.parser")
+a = abf.findAll("a")
+
+uri = "http://www.biqukan.com/"
+
+
+def download(num):
+    for item in a[num:]:
+        try:
+            req = requests.get(url=uri + item.get("href"), timeout=30)
+        except Exception:
+            print("TimeOut")
+            download(num)
+        num = num + 1
+        bs = BeautifulSoup(req.text, "html.parser")
+        textStr = bs.findAll("div", class_="showtxt")
+        content = item.text + "\n" + textStr[0].text.replace('\xa0' * 8, ' ')
+        index = content.find("[笔趣看")
+        print(index)
+        new_content = content[0:index]
+        mFile = open("../files/ShenMu.txt", "a", encoding="utf-8")
+        mFile.write(new_content + "\n")
+        mFile.close()
+        time.sleep(10)
+
+
+download(12)
