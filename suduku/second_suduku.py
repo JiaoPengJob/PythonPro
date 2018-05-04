@@ -7,73 +7,90 @@ import random
 import numpy as np
 import wx
 
-one_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-two_list = []
-three_list = []
-four_list = []
-five_list = []
-six_list = []
-seven_list = []
-eight_list = []
-nine_list = []
-random.shuffle(one_list)
-np_one_list = np.array(one_list)
-one = np.split(np_one_list, 3)
-two_list.append(one[1])
-three_list.append(one[2])
-two_list.append(one[2])
-three_list.append(one[0])
-two_list.append(one[0])
-three_list.append(one[1])
-two_list = np.ravel(two_list, order="A")
-three_list = np.ravel(three_list, order="A")
-col_one = np.transpose(one)
-four_list.append(col_one[1])
-seven_list.append(col_one[2])
-four_list.append(col_one[2])
-seven_list.append(col_one[0])
-four_list.append(col_one[0])
-seven_list.append(col_one[1])
-four_list = np.ravel(four_list, order="F")
-seven_list = np.ravel(seven_list, order="F")
-three = np.split(three_list, 3)
-col_three = np.transpose(three)
-six_list.append(col_three[1])
-nine_list.append(col_three[2])
-six_list.append(col_three[2])
-nine_list.append(col_three[0])
-six_list.append(col_three[0])
-nine_list.append(col_three[1])
-six_list = np.ravel(six_list, order="F")
-nine_list = np.ravel(nine_list, order="F")
-five_list.append(two_list[2])
-five_list.append(two_list[0])
-five_list.append(two_list[1])
-five_list.append(six_list[0])
-five_list.append(six_list[1])
-five_list.append(six_list[2])
-five_list.append(seven_list[0])
-five_list.append(seven_list[1])
-five_list.append(seven_list[2])
-eight_list.append(one_list[4])
-eight_list.append(one_list[5])
-eight_list.append(one_list[3])
-eight_list.append(seven_list[6])
-eight_list.append(seven_list[7])
-eight_list.append(seven_list[8])
-eight_list.append(six_list[3])
-eight_list.append(six_list[4])
-eight_list.append(six_list[5])
 
-# print("np_one_list == " + str(np_one_list))
-# print('two_list == ' + str(two_list))
-# print('three_list == ' + str(three_list))
-# print('four_list == ' + str(four_list))
-# print('five_list == ' + str(five_list))
-# print('six_list == ' + str(six_list))
-# print('seven_list == ' + str(seven_list))
-# print('eight_list == ' + str(eight_list))
-# print('nine_list == ' + str(nine_list))
+def init_new_data():
+    one_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    two_list = []
+    three_list = []
+    four_list = []
+    five_list = []
+    six_list = []
+    seven_list = []
+    eight_list = []
+    nine_list = []
+    random.shuffle(one_list)
+    np_one_list = np.array(one_list)
+    one = np.split(np_one_list, 3)
+    two_list.append(one[1])
+    three_list.append(one[2])
+    two_list.append(one[2])
+    three_list.append(one[0])
+    two_list.append(one[0])
+    three_list.append(one[1])
+    two_list = np.ravel(two_list, order="A")
+    three_list = np.ravel(three_list, order="A")
+    col_one = np.transpose(one)
+    four_list.append(col_one[1])
+    seven_list.append(col_one[2])
+    four_list.append(col_one[2])
+    seven_list.append(col_one[0])
+    four_list.append(col_one[0])
+    seven_list.append(col_one[1])
+    four_list = np.ravel(four_list, order="F")
+    seven_list = np.ravel(seven_list, order="F")
+    three = np.split(three_list, 3)
+    col_three = np.transpose(three)
+    six_list.append(col_three[1])
+    nine_list.append(col_three[2])
+    six_list.append(col_three[2])
+    nine_list.append(col_three[0])
+    six_list.append(col_three[0])
+    nine_list.append(col_three[1])
+    six_list = np.ravel(six_list, order="F")
+    nine_list = np.ravel(nine_list, order="F")
+    five_list.append(two_list[2])
+    five_list.append(two_list[0])
+    five_list.append(two_list[1])
+    five_list.append(six_list[0])
+    five_list.append(six_list[1])
+    five_list.append(six_list[2])
+    five_list.append(seven_list[0])
+    five_list.append(seven_list[1])
+    five_list.append(seven_list[2])
+    eight_list.append(one_list[4])
+    eight_list.append(one_list[5])
+    eight_list.append(one_list[3])
+    eight_list.append(seven_list[6])
+    eight_list.append(seven_list[7])
+    eight_list.append(seven_list[8])
+    eight_list.append(six_list[3])
+    eight_list.append(six_list[4])
+    eight_list.append(six_list[5])
+
+    # print("np_one_list == " + str(np_one_list))
+    # print('two_list == ' + str(two_list))
+    # print('three_list == ' + str(three_list))
+    # print('four_list == ' + str(four_list))
+    # print('five_list == ' + str(five_list))
+    # print('six_list == ' + str(six_list))
+    # print('seven_list == ' + str(seven_list))
+    # print('eight_list == ' + str(eight_list))
+    # print('nine_list == ' + str(nine_list))
+
+    all_list = []
+    all_list.append(np_one_list)
+    all_list.append(two_list)
+    all_list.append(three_list)
+    all_list.append(four_list)
+    all_list.append(five_list)
+    all_list.append(six_list)
+    all_list.append(seven_list)
+    all_list.append(eight_list)
+    all_list.append(nine_list)
+    all_list = np.array(all_list)
+
+    return all_list
+
 
 olds = []
 news = []
@@ -81,7 +98,7 @@ news = []
 
 class MySuduku(wx.Frame):
 
-    def __init__(self, parent, title="我的数独", ndarrs=[]):
+    def __init__(self, parent, title="My Suduku", ndarrs=[]):
         super(MySuduku, self).__init__(parent, title=title, size=(500, 500))
         self.init_ui(ndarrs)
         self.Centre()
@@ -118,11 +135,19 @@ class MySuduku(wx.Frame):
                 ges.Add(my_btn, 0, wx.EXPAND)
             gs.Add(ges, 0, wx.EXPAND)
         box.Add(gs, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.EXPAND)
+
+        my_btn_restart = wx.Button(p, label="Restart", size=(60, 40))
+        my_btn_restart.SetFont(wx.Font(20, wx.SWISS, wx.NORMAL, wx.NORMAL, False))
+        my_btn_restart.SetForegroundColour('red')
+        self.Bind(wx.EVT_BUTTON, self.OnRestart, my_btn_restart)
+        box.Add(my_btn_restart, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.EXPAND)
+
         my_btn_ok = wx.Button(p, label="OK", size=(60, 40))
         my_btn_ok.SetFont(wx.Font(20, wx.SWISS, wx.NORMAL, wx.NORMAL, False))
         my_btn_ok.SetForegroundColour('red')
         self.Bind(wx.EVT_BUTTON, self.OnOk, my_btn_ok)
         box.Add(my_btn_ok, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.EXPAND)
+
         p.SetSizer(box)
 
     def OnClick(self, event):
@@ -138,20 +163,23 @@ class MySuduku(wx.Frame):
             y = number[1]
         MyDialog(self, title="请选择", btn=event.GetEventObject(), x=x, y=y).ShowModal()
 
+    def OnRestart(self, event):
+        self.Close(True)
+        main()
+
     def OnOk(self, event):
         one_news = np.ravel(news, order="A")
         one_olds = np.ravel(olds, order="A")
-        print('one_news == ' + str(one_news))
-        print('one_olds == ' + str(one_olds))
+        # print('one_news == ' + str(one_news))
+        # print('one_olds == ' + str(one_olds))
         result = one_news == one_olds
-        print(result)
-        for r in result:
-            if r is True:
-                return
-            else:
-                print("失败！")
-                break
-        pass
+        # print(result)
+        # print('count == ' + str(np.sum(result == 0)))
+        if np.sum(result == 0) == 0:
+            # print('OK')
+            wx.MessageDialog(self, 'Incredible！', caption='Result').ShowModal()
+        else:
+            wx.MessageDialog(self, 'MDZZ！', caption='Result').ShowModal()
 
 
 class MyDialog(wx.Dialog):
@@ -184,20 +212,14 @@ class MyDialog(wx.Dialog):
         self.Destroy()
 
 
-all_list = []
-all_list.append(np_one_list)
-all_list.append(two_list)
-all_list.append(three_list)
-all_list.append(four_list)
-all_list.append(five_list)
-all_list.append(six_list)
-all_list.append(seven_list)
-all_list.append(eight_list)
-all_list.append(nine_list)
-all_list = np.array(all_list)
-print('all_list == ' + str(all_list))
-olds = copy.deepcopy(all_list)
-print('olds == ' + str(olds))
-app = wx.App()
-MySuduku(None, ndarrs=all_list)
-app.MainLoop()
+def main():
+    mList = init_new_data()
+    # print('all_list == ' + str(all_list))
+    olds = copy.deepcopy(mList)
+    # print('olds == ' + str(olds))
+    app = wx.App()
+    MySuduku(None, ndarrs=mList)
+    app.MainLoop()
+
+
+main()
