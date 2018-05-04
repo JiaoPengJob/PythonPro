@@ -1,6 +1,7 @@
 #!/usr/bin/evn python
 # -*-coding : utf-8 -*-
 
+import copy
 import random
 
 import numpy as np
@@ -74,6 +75,7 @@ eight_list.append(six_list[5])
 # print('eight_list == ' + str(eight_list))
 # print('nine_list == ' + str(nine_list))
 
+olds = []
 news = []
 
 
@@ -108,7 +110,7 @@ class MySuduku(wx.Frame):
                     my_btn = wx.Button(p, label=str(ndarrs[i][j]), size=(40, 40))
                     my_btn.SetFont(wx.Font(20, wx.SWISS, wx.NORMAL, wx.NORMAL, False))
                     ints = str(i) + str(j)
-                    my_btn.SetId(int(ints, base=10))
+                    my_btn.SetName(ints)
                     my_btn.SetForegroundColour('white')
                     my_btn.SetBackgroundColour('white')
                     # 设置点击事件
@@ -116,15 +118,16 @@ class MySuduku(wx.Frame):
                 ges.Add(my_btn, 0, wx.EXPAND)
             gs.Add(ges, 0, wx.EXPAND)
         box.Add(gs, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.EXPAND)
-        my_btn = wx.Button(p, label="OK", size=(60, 40))
-        my_btn.SetFont(wx.Font(20, wx.SWISS, wx.NORMAL, wx.NORMAL, False))
-        my_btn.SetForegroundColour('red')
-        box.Add(my_btn, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.EXPAND)
+        my_btn_ok = wx.Button(p, label="OK", size=(60, 40))
+        my_btn_ok.SetFont(wx.Font(20, wx.SWISS, wx.NORMAL, wx.NORMAL, False))
+        my_btn_ok.SetForegroundColour('red')
+        self.Bind(wx.EVT_BUTTON, self.OnOk, my_btn_ok)
+        box.Add(my_btn_ok, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.EXPAND)
         p.SetSizer(box)
 
     def OnClick(self, event):
         # print(str(event.GetEventObject().GetId()))
-        number = str(event.GetEventObject().GetId())
+        number = event.GetEventObject().GetName()
         x = 0
         y = 0
         if len(number) == 1:
@@ -133,36 +136,51 @@ class MySuduku(wx.Frame):
         elif len(number) == 2:
             x = number[0]
             y = number[1]
-        MyDialog(self, "请选择", btn=event.GetEventObject(), x=x, y=y).ShowModal()
+        MyDialog(self, title="请选择", btn=event.GetEventObject(), x=x, y=y).ShowModal()
 
-    def OnOk(self):
-
+    def OnOk(self, event):
+        one_news = np.ravel(news, order="A")
+        one_olds = np.ravel(olds, order="A")
+        print('one_news == ' + str(one_news))
+        print('one_olds == ' + str(one_olds))
+        result = one_news == one_olds
+        print(result)
+        for r in result:
+            if r is True:
+                return
+            else:
+                print("失败！")
+                break
         pass
 
 
 class MyDialog(wx.Dialog):
     my_btn = None
+    xx = 0
+    yy = 0
 
     def __init__(self, parent, title, btn, x, y):
         super(MyDialog, self).__init__(parent, title=title, size=(200, 200))
         self.my_btn = btn
-
-        print(str(x) + " == " + str(y))
+        self.xx = int(x)
+        self.yy = int(y)
+        # print(self.my_btn.GetLabel())
 
         panel = wx.Panel(self)
         gs = wx.GridSizer(3, 3, 4, 4)
         for i in range(1, 10):
             btn = str(i)
-            my_btn = wx.Button(panel, label=btn, size=(40, 40))
-            my_btn.SetFont(wx.Font(20, wx.SWISS, wx.NORMAL, wx.BOLD, False))
-            gs.Add(my_btn, 0, wx.EXPAND)
-            self.Bind(wx.EVT_BUTTON, self.OnClick, my_btn)
+            my_btn_in = wx.Button(panel, label=btn, size=(40, 40))
+            my_btn_in.SetFont(wx.Font(20, wx.SWISS, wx.NORMAL, wx.BOLD, False))
+            gs.Add(my_btn_in, 0, wx.EXPAND)
+            self.Bind(wx.EVT_BUTTON, self.OnClicked, my_btn_in)
         panel.SetSizer(gs)
         self.Centre()
 
-    def OnClick(self, event):
+    def OnClicked(self, event):
         self.my_btn.SetLabel(event.GetEventObject().GetLabel())
         self.my_btn.SetForegroundColour('red')
+        news[self.xx][self.yy] = int(event.GetEventObject().GetLabel())
         self.Destroy()
 
 
@@ -176,8 +194,10 @@ all_list.append(six_list)
 all_list.append(seven_list)
 all_list.append(eight_list)
 all_list.append(nine_list)
+all_list = np.array(all_list)
 print('all_list == ' + str(all_list))
+olds = copy.deepcopy(all_list)
+print('olds == ' + str(olds))
 app = wx.App()
 MySuduku(None, ndarrs=all_list)
-print(news)
 app.MainLoop()
